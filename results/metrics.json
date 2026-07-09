@@ -1,0 +1,46 @@
+{
+  "rows": 489,
+  "cv": "nested 5-fold (grid search inside each outer training fold)",
+  "models": {
+    "Mean (baseline)": {
+      "r2": -0.0053,
+      "rmse": 165606.0,
+      "mae": 123023.0
+    },
+    "Linear regression": {
+      "r2": 0.7084,
+      "rmse": 89185.0,
+      "mae": 66369.0
+    },
+    "Polynomial regression (degree 2)": {
+      "r2": 0.8232,
+      "rmse": 69455.0,
+      "mae": 52961.0
+    },
+    "Decision tree": {
+      "r2": 0.8173,
+      "rmse": 70601.0,
+      "mae": 51903.0
+    },
+    "Random forest": {
+      "r2": 0.8362,
+      "rmse": 66840.0,
+      "mae": 49274.0
+    },
+    "Gradient boosting": {
+      "r2": 0.834,
+      "rmse": 67296.0,
+      "mae": 50887.0
+    }
+  },
+  "best_model": "Random forest",
+  "best_params": {
+    "max_features": 2,
+    "min_samples_leaf": 3
+  },
+  "interval_80pct": {
+    "residual_q10": -79339.0,
+    "residual_q90": 76467.0
+  },
+  "target_mean": 454343.0
+}
