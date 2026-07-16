@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>House Price Predictor</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <main class="wrap">
+    <h1>House Price Predictor</h1>
+    <p class="lead">Estimate the median home value of a Boston neighbourhood from three facts about it.</p>
+
+    <form method="post" class="panel" novalidate>
+      <label>Average rooms per home <span class="hint">({{ limits.RM[0] }} to {{ limits.RM[1] }})</span>
+        <input type="number" name="RM" step="0.01" min="{{ limits.RM[0] }}" max="{{ limits.RM[1] }}" value="{{ values.RM }}" required>
+      </label>
+      <label>Lower-status residents, % <span class="hint">({{ limits.LSTAT[0] }} to {{ limits.LSTAT[1] }})</span>
+        <input type="number" name="LSTAT" step="0.01" min="{{ limits.LSTAT[0] }}" max="{{ limits.LSTAT[1] }}" value="{{ values.LSTAT }}" required>
+      </label>
+      <label>Pupils per teacher <span class="hint">({{ limits.PTRATIO[0] }} to {{ limits.PTRATIO[1] }})</span>
+        <input type="number" name="PTRATIO" step="0.1" min="{{ limits.PTRATIO[0] }}" max="{{ limits.PTRATIO[1] }}" value="{{ values.PTRATIO }}" required>
+      </label>
+      <button type="submit">Estimate price</button>
+    </form>
+
+    {% if errors %}
+      <div class="panel error" role="alert"><ul>{% for e in errors %}<li>{{ e }}</li>{% endfor %}</ul></div>
+    {% endif %}
+
+    {% if result %}
+      <div class="panel result" aria-live="polite">
+        <p class="label">Estimated median value</p>
+        <p class="price">${{ "{:,.0f}".format(result.price) }}</p>
+        <p class="range">80% of similar neighbourhoods fell between <strong>${{ "{:,.0f}".format(result.low) }}</strong> and <strong>${{ "{:,.0f}".format(result.high) }}</strong></p>
+      </div>
+    {% endif %}
+
+    <p class="foot">Model: {{ model_name }} (cross-validated R² {{ "%.3f"|format(cv_r2) }}) ·
+      <a href="https://github.com/Collinsthe4th/boston-housing-prediction">Source</a> · Built by Collins Akagha</p>
+  </main>
+</body>
+</html>
