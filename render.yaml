@@ -1,0 +1,12 @@
+# One-click deploy on Render (https://render.com). The build trains the model.
+services:
+  - type: web
+    name: house-price-predictor
+    runtime: python
+    plan: free
+    buildCommand: pip install -r requirements.txt && python scripts/train.py
+    startCommand: gunicorn "housing.app:create_app()" --chdir src --bind 0.0.0.0:$PORT
+    healthCheckPath: /health
+    envVars:
+      - key: PYTHON_VERSION
+        value: "3.11.9"
