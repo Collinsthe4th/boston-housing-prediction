@@ -22,7 +22,10 @@ sys.path.insert(0, str(ROOT / "src"))
 
 from housing.model import FEATURES, LIMITS, TARGET, HousePricePredictor, candidate_models, load  # noqa: E402
 
-st.set_page_config(page_title="House Price Predictor", page_icon="🏠", layout="wide")
+st.set_page_config(page_title="House Price Predictor", layout="wide")
+
+HEADER = "https://images.unsplash.com/photo-1565402170291-8491f14678db?auto=format&fit=crop&w=1600&h=340&q=80"
+st.image(HEADER, use_container_width=True)
 
 
 @st.cache_resource
@@ -39,8 +42,8 @@ def build() -> tuple[HousePricePredictor, pd.DataFrame, dict]:
 
 predictor, df, metrics = build()
 
-st.title("🏠 House Price Predictor")
-st.caption("Estimate the median home value of a Boston neighbourhood from three facts about it. Trained on 489 neighbourhoods.")
+st.title("House Price Predictor")
+st.caption("This app estimates the median home value of a Boston neighbourhood from three facts about it. The random forest behind it was trained on 489 neighbourhoods.")
 
 left, right = st.columns([1, 1.2])
 with left:
@@ -70,4 +73,4 @@ with c2:
     feature = st.selectbox("Price against", FEATURES, format_func={"RM": "Rooms per home", "LSTAT": "Lower-status residents (%)", "PTRATIO": "Pupils per teacher"}.get)
     st.scatter_chart(df, x=feature, y=TARGET, size=10)
 
-st.markdown("[Source code and README](https://github.com/Collinsthe4th/boston-housing-prediction)")
+st.markdown("[Source code and README](https://github.com/Collinsthe4th/boston-housing-prediction) · Header photo from Unsplash.")
